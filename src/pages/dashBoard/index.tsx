@@ -2,8 +2,10 @@ import { useState } from "react";
 import { StyledDash } from "./style";
 import ModalCliente from "../../components/modalCliente";
 import ModalContato from "../../components/modalContato";
+import { useNavigate } from "react-router-dom";
 
 const DashBoard = () => {
+  const navigate = useNavigate();
   const [isCadastroClienteOpen, setIsCadastroClienteOpen] = useState(false);
   const [isCadastroContatoOpen, setIsCadastroContatoOpen] = useState(false);
 
@@ -25,7 +27,14 @@ const DashBoard = () => {
 
   return (
     <StyledDash>
-      <button>Sair</button>
+      <button
+        onClick={(event) => {
+          event.preventDefault();
+          navigate("/");
+        }}
+      >
+        Sair
+      </button>
       <button onClick={handleOpenCadastroClienteModal}>
         Cadastrar cliente
       </button>

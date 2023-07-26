@@ -23,21 +23,8 @@ const StyledLogin = styled.main`
     height: 500px;
 
     > h1 {
-      font-size: 30px;
+      font-size: 60px;
       font-weight: bold;
-    }
-  }
-
-  .container_inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 50%;
-    font-weight: bold;
-
-    > input {
-      padding: 10px;
-      border: none;
     }
   }
 
@@ -48,11 +35,28 @@ const StyledLogin = styled.main`
 
     > button {
       background-color: var(--color-primary);
-      padding: 20px;
+      padding-left: 200px;
+      padding-right: 200px;
+      padding-top: 40px;
+      padding-bottom: 40px;
       border: none;
 
+      font-size: 28px;
       font-weight: bold;
       color: var(--color-secondary);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .container > h1 {
+      font-size: 30px;
+    }
+
+    .container_buttons > button {
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 20px;
+      padding-bottom: 20px;
     }
   }
 `;
