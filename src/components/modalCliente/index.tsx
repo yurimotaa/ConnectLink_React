@@ -34,9 +34,9 @@ const ModalCliente = ({ isOpen, onClose }: ModalProps) => {
         <input type="text" placeholder="Nome completo" {...register("name")} />
         <input type="email" placeholder="E-mail" {...register("email")} />
         <input type="tel" placeholder="Telefone" {...register("phone")} />
-        {errors.name && <p>{errors.name.message}</p>}{" "}
-        {errors.email && <p>{errors.email.message}</p>}{" "}
-        {errors.phone && <p>{errors.phone.message}</p>}{" "}
+        {errors.name && <p>{errors.name.message}</p>}
+        {errors.email && <p>{errors.email.message}</p>}
+        {errors.phone && <p>{errors.phone.message}</p>}
         <button onClick={handleSubmit(handleFormSubmit)}>Cadastrar</button>
         <button onClick={onClose}>Cancelar</button>
       </ModalContent>

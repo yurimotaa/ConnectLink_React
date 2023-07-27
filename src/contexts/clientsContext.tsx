@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useState } from "react";
 import { TClientData } from "../components/modalCliente/validators";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -21,6 +21,8 @@ interface IClientContext {
   getAllClients: () => Promise<void>;
   allClients: IClientResponse[];
   deleteClient: (clientId: number) => Promise<void>;
+  setClientId: React.Dispatch<React.SetStateAction<number | null>>;
+  clientId: number | null;
 }
 
 export const ClientContext = createContext({} as IClientContext);
@@ -28,6 +30,7 @@ export const ClientContext = createContext({} as IClientContext);
 export const ClientContextProvider = ({ children }: IDefaultProps) => {
   const [clientData, setClientData] = useState<TClientData | null>(null);
   const [allClients, setAllClients] = useState([]);
+  const [clientId, setClientId] = useState<number | null>(null);
 
   const getAllClients = async () => {
     try {
@@ -35,7 +38,6 @@ export const ClientContextProvider = ({ children }: IDefaultProps) => {
         "https://connect-link-api.onrender.com/clients"
       );
       setAllClients(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +75,14 @@ export const ClientContextProvider = ({ children }: IDefaultProps) => {
 
   return (
     <ClientContext.Provider
-      value={{ onSubmit, getAllClients, allClients, deleteClient }}
+      value={{
+        onSubmit,
+        getAllClients,
+        allClients,
+        deleteClient,
+        setClientId,
+        clientId,
+      }}
     >
       {children}
     </ClientContext.Provider>
