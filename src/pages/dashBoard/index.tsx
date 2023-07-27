@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyledDash } from "./style";
 import ModalCliente from "../../components/modalCliente";
 import ModalContato from "../../components/modalContato";
 import { useNavigate } from "react-router-dom";
+import { ClientContext } from "../../contexts/clientsContext";
 
 const DashBoard = () => {
   const navigate = useNavigate();
   const [isCadastroClienteOpen, setIsCadastroClienteOpen] = useState(false);
   const [isCadastroContatoOpen, setIsCadastroContatoOpen] = useState(false);
+
+  const { allClients, getAllClients, deleteClient } = useContext(ClientContext);
+
+  useEffect(() => {
+    getAllClients();
+  }, []);
 
   const handleOpenCadastroClienteModal = () => {
     setIsCadastroClienteOpen(true);
@@ -25,6 +32,10 @@ const DashBoard = () => {
     setIsCadastroContatoOpen(false);
   };
 
+  const handleDeleteClient = (clientId: number) => {
+    deleteClient(clientId);
+  };
+
   return (
     <StyledDash>
       <button
@@ -40,17 +51,27 @@ const DashBoard = () => {
       </button>
       <h1>Clientes Cadastrados</h1>
       <div className="container">
-        <div className="cards">
-          <p>Nome: joao</p>
-          <p>Email: joao@mail.com</p>
-          <p>Telefone: 63 995959595</p>
-          <p>Registrado em: 23/04/523</p>
-          <button onClick={handleOpenCadastroContatoModal}>
-            Cadastrar contato
-          </button>
-          <button>Ver todos os contatos</button>
-          <button>Excluir cliente</button>
-        </div>
+        {allClients.length === 0 ? (
+          <h1>Não há clientes cadastrados.</h1>
+        ) : (
+          allClients.map((client) => (
+            <div key={client.id} className="cards">
+              <p>Nome: {client.name}</p>
+              <p>Email: {client.email}</p>
+              <p>Telefone: {client.phone}</p>
+              <p>
+                Registrado em: {new Date(client.createdAt).toLocaleDateString()}
+              </p>
+              <button onClick={handleOpenCadastroContatoModal}>
+                Cadastrar contato
+              </button>
+              <button>Ver todos os contatos</button>
+              <button onClick={() => handleDeleteClient(client.id)}>
+                Excluir cliente
+              </button>
+            </div>
+          ))
+        )}
       </div>
       <ModalCliente
         isOpen={isCadastroClienteOpen}

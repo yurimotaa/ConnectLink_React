@@ -3,7 +3,9 @@ import { styled } from "styled-components";
 const StyledDash = styled.main`
   background-color: var(--color-primary);
 
-  height: 100vh;
+  padding-bottom: 30px;
+
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -41,19 +43,30 @@ const StyledDash = styled.main`
     background-color: var(--color-secondary);
     color: var(--color-secondary);
     font-weight: bold;
-
+    padding-right: 20px;
+    padding-bottom: 20px;
     width: 90%;
-    height: 400px;
+    height: 500px;
     margin-left: 50px;
+
+    overflow-x: auto;
+
+    > h1 {
+      margin-left: 20px;
+      margin-top: 50px;
+      color: white;
+    }
   }
 
   .cards {
-    height: 80%;
+    height: 90%;
     width: 20%;
 
     margin-top: 20px;
     margin-left: 20px;
     padding: 20px;
+
+    gap: 20px;
 
     display: flex;
     flex-direction: column;
@@ -78,9 +91,12 @@ const StyledDash = styled.main`
     .container {
       width: 70%;
       font-size: 12px;
-
+      padding-bottom: 20px;
       flex-direction: column;
       align-items: center;
+
+      overflow-y: auto;
+      flex-shrink: 0;
     }
 
     .cards {
