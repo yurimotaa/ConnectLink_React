@@ -1,54 +1,55 @@
 import { useNavigate } from "react-router-dom";
-import { StyledLogin } from "./style";
+import { StyledRegister } from "./style";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { TUserData, createUserSchema } from "./validator";
+import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/usersContext";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { TLoginData, loginSchema } from "./validators";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const navigate = useNavigate();
-  const { onSubmit } = useContext(UserContext);
+  const { registerUser } = useContext(UserContext);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TLoginData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<TUserData>({
+    resolver: zodResolver(createUserSchema),
   });
 
-  const handleFormSubmit = (data: any) => {
-    onSubmit(data);
+  const onSubmit = (data: TUserData) => {
+    registerUser(data);
   };
 
   return (
-    <StyledLogin>
+    <StyledRegister>
       <div className="container">
-        <h1>ConnectLink</h1>
+        <h1>Faça seu Cadastro</h1>
         <div className="container_inputs">
+          <label htmlFor="name">Nome completo</label>
+          <input type="text" id="name" {...register("name")} />
           <label htmlFor="email">Email</label>
           <input type="email" id="email" {...register("email")} />
-          {errors.email && <p>{errors.email.message}</p>}
           <label htmlFor="password">Senha</label>
           <input type="password" id="password" {...register("password")} />
-          {errors.password && <p>{errors.password.message}</p>}
         </div>
+
         <div className="container_buttons">
-          <button onClick={handleSubmit(handleFormSubmit)}>Entrar</button>
+          <button onClick={handleSubmit(onSubmit)}>Cadastre-se</button>
           <button
             onClick={(event) => {
               event.preventDefault();
 
-              navigate("/register");
+              navigate("/");
             }}
           >
-            Cadastre-se
+            Retornar
           </button>
         </div>
       </div>
-    </StyledLogin>
+    </StyledRegister>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

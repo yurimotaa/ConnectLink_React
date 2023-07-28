@@ -7,6 +7,7 @@ import { ClientContext } from "../../contexts/clientsContext";
 import { ContactContext } from "../../contexts/contactsContext";
 import { toast } from "react-toastify";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+import { UserContext } from "../../contexts/usersContext";
 
 const DashBoard = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const DashBoard = () => {
     useContext(ClientContext);
 
   const { getContactsByClientId, getAllContacts } = useContext(ContactContext);
+  const { logout } = useContext(UserContext);
 
   const handleVerContatosClick = async (clientId: number) => {
     const contacts = getContactsByClientId(clientId);
@@ -101,14 +103,7 @@ const DashBoard = () => {
 
   return (
     <StyledDash>
-      <button
-        onClick={(event) => {
-          event.preventDefault();
-          navigate("/");
-        }}
-      >
-        Sair
-      </button>
+      <button onClick={logout}>Sair</button>
       <button onClick={handleOpenCadastroClienteModal}>
         Cadastrar cliente
       </button>
